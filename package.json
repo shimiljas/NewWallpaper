@@ -10,6 +10,8 @@
     "axios": "^0.18.0",
     "react": "16.8.3",
     "react-native": "0.59.8",
+    "react-native-firebase": "^5.3.1",
+    "react-native-push-notification-popup": "^1.2.0",
     "react-native-router-flux": "^4.0.6",
     "react-native-vector-icons": "^6.4.2"
   },

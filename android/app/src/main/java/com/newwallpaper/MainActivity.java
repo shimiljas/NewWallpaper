@@ -1,4 +1,4 @@
-package com.newwallpaper;
+package com.softwave.newwallpaper;
 
 import com.facebook.react.ReactActivity;
 

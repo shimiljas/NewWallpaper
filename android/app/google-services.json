@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "164159921303",
+    "firebase_url": "https://newwallpapper.firebaseio.com",
+    "project_id": "newwallpapper",
+    "storage_bucket": "newwallpapper.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:164159921303:android:9b5860b4d3f07125",
+        "android_client_info": {
+          "package_name": "com.softwave.newwallpaper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "164159921303-6r1abu2rln191hn8lvnhs1rt77m2gvon.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdDbTQjDQ1qqgJaxpTezXx8GqUmMCA7aw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "164159921303-6r1abu2rln191hn8lvnhs1rt77m2gvon.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
