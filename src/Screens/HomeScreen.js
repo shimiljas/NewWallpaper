@@ -6,10 +6,12 @@ import {
   Alert,
   FlatList,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
+  Dimensions
 } from "react-native";
+import { CachedImage, ImageCacheProvider } from "react-native-cached-image";
 import { Actions } from "react-native-router-flux";
-
+const { height, width } = Dimensions.get("window");
 class HomeScreen extends Component {
   constructor(props) {
     super(props);
@@ -51,11 +53,13 @@ class HomeScreen extends Component {
             <TouchableOpacity
               key={index}
               style={styles.GridViewContainer}
-              onPress={() => Actions.Image()}
+              onPress={() => Actions.Image({ image: item.url })}
             >
-              <Image
+              <CachedImage
+                resizeMethod="resize"
+                resizeMode="cover"
                 source={{ uri: item.url }}
-                style={{ width: "100%", height: "100%" }}
+                style={{ width: "100%", height: 300 }}
               />
             </TouchableOpacity>
           )}
@@ -78,7 +82,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold"
   },
   GridViewContainer: {
-    flex: 1,
+    width,
     justifyContent: "center",
     alignItems: "center",
     height: 300,

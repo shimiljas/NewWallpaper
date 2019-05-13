@@ -9,9 +9,9 @@ class Header extends Component {
         <TouchableOpacity onPress={() => Actions.pop()} style={styles.imageBox}>
           <AntDesign name="leftcircleo" style={{ color: "white" }} size={22} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.imageBox2}>
+        {/* <TouchableOpacity style={styles.imageBox2}>
           <AntDesign name="hearto" style={{ color: "white" }} size={22} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     );
   }

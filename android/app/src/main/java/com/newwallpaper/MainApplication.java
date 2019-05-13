@@ -3,6 +3,7 @@ package com.softwave.newwallpaper;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.krazylabs.OpenAppSettingsPackage;
 import io.invertase.firebase.RNFirebasePackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactNativeHost;
@@ -15,6 +16,7 @@ import io.invertase.firebase.analytics.RNFirebaseAnalyticsPackage;
 import com.google.android.gms.ads.MobileAds;
 import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
 import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage;
+import com.RNFetchBlob.RNFetchBlobPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,9 +31,10 @@ public class MainApplication extends Application implements ReactApplication {
 
     @Override
     protected List<ReactPackage> getPackages() {
-      return Arrays.<ReactPackage>asList(new MainReactPackage(), new RNFirebasePackage(), new VectorIconsPackage(),
+      return Arrays.<ReactPackage>asList(new MainReactPackage(),
+            new OpenAppSettingsPackage(), new RNFirebasePackage(), new VectorIconsPackage(),
           new RNFirebaseAdMobPackage(), new RNFirebaseAnalyticsPackage(), new RNFirebaseMessagingPackage(),
-          new RNFirebaseNotificationsPackage());
+          new RNFirebaseNotificationsPackage(), new RNFetchBlobPackage());
     }
 
     @Override

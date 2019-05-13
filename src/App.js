@@ -6,16 +6,28 @@ import {
   Alert,
   FlatList,
   AsyncStorage,
-  Platform
+  Platform,
+  Dimensions,
+  Easing,
+  TouchableHighlight
 } from "react-native";
-import { Router, Scene, Drawer } from "react-native-router-flux";
+import { Router, Scene, Actions } from "react-native-router-flux";
 import HomeScreen from "./Screens/HomeScreen";
 import ImageScreen from "./Screens/ImageScreen";
 import firebase from "react-native-firebase";
 import NotificationPopup from "react-native-push-notification-popup";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import Drawer from "react-native-drawer-menu";
+
+const { width, height } = Dimensions.get("window");
+
 class App extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      disabled: false
+    };
+
     this.checkPermission();
     this.createNotificationListeners();
   }
@@ -24,6 +36,12 @@ class App extends Component {
     this.notificationListener();
     this.notificationOpenedListener();
   }
+
+  toggle = () => {
+    this.setState({
+      disabled: !this.state.disabled
+    });
+  };
 
   async getToken() {
     let fcmToken = await AsyncStorage.getItem("fcmToken");
@@ -116,11 +134,24 @@ class App extends Component {
     const AdRequest = firebase.admob.AdRequest;
     const request = new AdRequest();
     const unitId = "ca-app-pub-3940256099942544/6300978111";
+
     return (
       <View style={{ flex: 1 }}>
         <Router>
-          <Scene key="root">
-            <Scene key="Home" component={HomeScreen} />
+          <Scene
+            key="root"
+            renderLeftButton={() => (
+              <MaterialCommunityIcons
+                onPress={() => {
+                  alert("ko");
+                }}
+                style={{ color: "black", marginLeft: 20 }}
+                name={"menu"}
+                size={30}
+              />
+            )}
+          >
+            <Scene key="Home" initial="true" component={HomeScreen} />
             <Scene key="Image" component={ImageScreen} hideNavBar />
           </Scene>
         </Router>
@@ -148,6 +179,83 @@ const styles = StyleSheet.create({
     flex: 1,
 
     backgroundColor: "black"
+  },
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: "black"
+  },
+  controlText: {
+    color: "white"
+  },
+  button: {
+    backgroundColor: "white",
+    borderWidth: 1,
+    borderColor: "black",
+    padding: 10
+  },
+  main: {
+    position: "absolute",
+    backgroundColor: "#2ba"
+  },
+  head: {
+    height: 60,
+    marginBottom: 200,
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "stretch",
+    backgroundColor: "#6a0d45"
+  },
+  content: {
+    flex: 1,
+    alignItems: "center",
+    alignSelf: "stretch",
+    backgroundColor: "#e3b8cb"
+  },
+  drawerContent: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  leftTop: {
+    flex: 1,
+    justifyContent: "space-around",
+    alignItems: "stretch",
+    alignSelf: "stretch",
+    backgroundColor: "#8ad8dd"
+  },
+  leftBottom: {
+    flex: 2,
+    justifyContent: "space-around",
+    alignItems: "center",
+    alignSelf: "stretch",
+    backgroundColor: "#f0f0f0"
+  },
+  leftDrawer: {
+    borderRightWidth: 4,
+    borderRightColor: "#5b585a"
+  },
+  rightDrawer: {
+    borderLeftWidth: 4,
+    borderLeftColor: "#5b585a"
+  },
+  btn1: {
+    marginTop: 10,
+    padding: 10,
+    overflow: "hidden",
+    borderRadius: 5,
+    backgroundColor: "#f06355"
+  },
+  btn2: {
+    marginTop: 10,
+    padding: 10,
+    overflow: "hidden",
+    borderRadius: 5,
+    backgroundColor: "#37b9d5"
+  },
+  btnText: {
+    fontSize: 14,
+    color: "#f0f0f0"
   }
 });
 
