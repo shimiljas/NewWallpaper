@@ -43,7 +43,8 @@ class App extends Component {
           span: 2
         },
         { id: "3", title: "Contact Us", color: "#f44336", span: 3 }
-      ]
+      ],
+      modal: false
     };
 
     this.checkPermission();
@@ -53,6 +54,9 @@ class App extends Component {
   componentWillUnmount() {
     this.notificationListener();
     this.notificationOpenedListener();
+  }
+  componentDidMount() {
+    closeNv();
   }
 
   toggle = () => {
@@ -147,12 +151,6 @@ class App extends Component {
   };
 
   render() {
-    firebase.admob().initialize("ca-app-pub-5050580636963483~4190266227");
-    const Banner = firebase.admob.Banner;
-    const AdRequest = firebase.admob.AdRequest;
-    const request = new AdRequest();
-    const unitId = "ca-app-pub-3940256099942544/6300978111";
-
     return (
       <View style={{ flex: 1 }}>
         <StatusBar backgroundColor={"#17202A"} />
@@ -170,7 +168,13 @@ class App extends Component {
               renderLeftButton={() => (
                 <MaterialCommunityIcons
                   onPress={() => {
-                    openNv();
+                    if (this.state.modal) {
+                      closeNv();
+                    } else {
+                      this.setState({ modal: true }, () => {
+                        openNv();
+                      });
+                    }
                   }}
                   style={{ color: "white", marginLeft: 20 }}
                   name={"menu"}
