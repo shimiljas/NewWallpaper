@@ -13,6 +13,8 @@ class ImageScreen extends Component {
       <View style={styles.container}>
         <Header />
         <CachedImage
+          resizeMethod={"resize"}
+          resizeMode={"cover"}
           style={styles.stretch}
           source={{
             uri: this.props.image
@@ -39,15 +41,15 @@ const styles = StyleSheet.create({
   },
   stretch: {
     width: "100%",
-    height: "80%"
+    minHeight: "85%",
+    backgroundColor: "red"
   },
   download: {
     width: "100%",
     height: 50,
     alignItems: "center",
     justifyContent: "center",
-    flexDirection: "row",
-    paddingBottom: 10
+    flexDirection: "row"
   },
   downloadText: {
     color: "white",

@@ -13,7 +13,7 @@ const toast = ({
     type,
     duration,
     style: {
-      backgroundColor: type === "danger" ? "red" : "black",
+      backgroundColor: type === "danger" ? "red" : "green",
       fontSize: 10
     }
   });

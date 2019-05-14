@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { CachedImage, ImageCacheProvider } from "react-native-cached-image";
 import { Actions } from "react-native-router-flux";
+import firebase from "react-native-firebase";
 const { height, width } = Dimensions.get("window");
 class HomeScreen extends Component {
   constructor(props) {
@@ -45,6 +46,11 @@ class HomeScreen extends Component {
   }
 
   render() {
+    firebase.admob().initialize("ca-app-pub-5050580636963483~4190266227");
+    const Banner = firebase.admob.Banner;
+    const AdRequest = firebase.admob.AdRequest;
+    const request = new AdRequest();
+    const unitId = "ca-app-pub-3940256099942544/6300978111";
     return (
       <View style={styles.container}>
         <FlatList
@@ -65,6 +71,19 @@ class HomeScreen extends Component {
           )}
           numColumns={1}
         />
+        <Banner
+          style={{ width: "100%", height: "100%" }}
+          unitId={unitId}
+          size={"FULL_BANNER"}
+          request={request.build()}
+          onAdLoaded={() => {
+            console.log("Advert loaded");
+          }}
+          onAdFailedToLoad={result => {
+            console.log("result", result);
+            console.log("Ad failed to load");
+          }}
+        />
       </View>
     );
   }
@@ -73,7 +92,9 @@ class HomeScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center"
+    justifyContent: "center",
+    backgroundColor: "black",
+    padding: 5
   },
   headerText: {
     fontSize: 20,
@@ -86,7 +107,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     height: 300,
-    margin: 5
+    marginVertical: 5
   },
   GridViewTextLayout: {
     fontSize: 20,
