@@ -55,9 +55,6 @@ class App extends Component {
     this.notificationListener();
     this.notificationOpenedListener();
   }
-  componentDidMount() {
-    closeNv();
-  }
 
   toggle = () => {
     this.setState({
@@ -154,38 +151,15 @@ class App extends Component {
     return (
       <View style={{ flex: 1 }}>
         <StatusBar backgroundColor={"#17202A"} />
-        <FancyNavigation
-          darkColor="#17202A"
-          lightColor="#424949"
-          onItemPress={this.menuOpen}
-          data={this.state.data}
-          imageUri="null"
-        />
+
         <Root>
           <Router>
-            <Scene
-              key="root"
-              renderLeftButton={() => (
-                <MaterialCommunityIcons
-                  onPress={() => {
-                    if (this.state.modal) {
-                      closeNv();
-                    } else {
-                      this.setState({ modal: true }, () => {
-                        openNv();
-                      });
-                    }
-                  }}
-                  style={{ color: "white", marginLeft: 20 }}
-                  name={"menu"}
-                  size={30}
-                />
-              )}
-            >
+            <Scene key="root">
               <Scene
                 key="Home"
                 initial="true"
                 component={HomeScreen}
+                hideNavBar
                 navigationBarStyle={{
                   backgroundColor: "#17202A"
                 }}

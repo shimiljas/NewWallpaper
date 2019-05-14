@@ -8,17 +8,26 @@ import {
   Image,
   TouchableOpacity,
   Dimensions,
-  Share
+  Share,
+  Linking
 } from "react-native";
 import { CachedImage, ImageCacheProvider } from "react-native-cached-image";
 import { Actions } from "react-native-router-flux";
 import firebase from "react-native-firebase";
 const { height, width } = Dimensions.get("window");
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import BouncyDrawer from "react-native-bouncy-drawer";
+import MAIcon from "react-native-vector-icons/MaterialIcons";
 import {
   FancyNavigation,
   openNv,
   closeNv
 } from "react-native-rounded-navigation-drawer";
+import Communications from "react-native-communications";
+import TopHeader from "../components/TopHeader";
+import SideMenu from "react-native-side-menu";
+import Menu from "./Menu";
+
 class HomeScreen extends Component {
   constructor(props) {
     super(props);
@@ -53,20 +62,20 @@ class HomeScreen extends Component {
           span: 2
         },
         { id: "3", title: "Contact Us", color: "#f44336", span: 3 }
-      ]
+      ],
+      modal: false
     };
   }
-  // componentDidMount() {
-  //   openNv();
-  // }
 
-  GetGridViewItem(item) {
-    Alert.alert(item);
-  }
   menuOpen = item => {
-    closeNv();
-    if (item.id == 2) {
+    if (item == 2) {
       this.onShare();
+    } else if (item == 1) {
+      Linking.openURL(
+        "https://play.google.com/store/apps/details?id=com.ubercab.eats&referrer=mat_click_id%3D7ba955e09e7842af865b84ec9ba081b5-20190514-7336%26link_click_id%3D656868187203377771&mat_click_id=7ba955e09e7842af865b84ec9ba081b5-20190514-7336"
+      );
+    } else if (item == 3) {
+      Communications.email(["contact@softwave.in"], null, null, "Review", "");
     }
   };
 
@@ -90,54 +99,84 @@ class HomeScreen extends Component {
       alert(error.message);
     }
   };
+  updateMenuState(isOpen) {
+    this.setState({ isOpen });
+  }
 
   render() {
-    firebase.admob().initialize("ca-app-pub-5050580636963483~4190266227");
     const Banner = firebase.admob.Banner;
     const AdRequest = firebase.admob.AdRequest;
     const request = new AdRequest();
     const unitId = "ca-app-pub-3940256099942544/6300978111";
+    const menu = <Menu onItemSelected={this.menuOpen} />;
+
     return (
-      <View style={styles.container}>
-        <FancyNavigation
-          darkColor="#17202A"
-          lightColor="#424949"
-          onItemPress={this.menuOpen}
-          data={this.state.data}
-          imageUri="null"
-        />
-        <FlatList
-          data={this.state.GridListItems}
-          renderItem={({ item, index }) => (
-            <TouchableOpacity
-              key={index}
-              style={styles.GridViewContainer}
-              onPress={() => Actions.Image({ image: item.url })}
-            >
-              <CachedImage
-                resizeMethod="resize"
-                resizeMode="cover"
-                source={{ uri: item.url }}
-                style={{ width: "100%", height: 300 }}
-              />
-            </TouchableOpacity>
-          )}
-          numColumns={1}
-        />
-        <Banner
-          style={{ width: "100%", height: "100%" }}
-          unitId={unitId}
-          size={"FULL_BANNER"}
-          request={request.build()}
-          onAdLoaded={() => {
-            console.log("Advert loaded");
-          }}
-          onAdFailedToLoad={result => {
-            console.log("result", result);
-            console.log("Ad failed to load");
-          }}
-        />
-      </View>
+      <SideMenu
+        menu={menu}
+        isOpen={this.state.isOpen}
+        onChange={isOpen => this.updateMenuState(isOpen)}
+      >
+        <View style={{ flex: 1 }}>
+          <View
+            style={{
+              width,
+              height: 60,
+              backgroundColor: "#17202A",
+              alignItems: "flex-start"
+            }}
+          >
+            <MaterialCommunityIcons
+              onPress={() => {
+                this.setState({ isOpen: true });
+              }}
+              style={{ color: "white", marginLeft: 20, marginTop: 10 }}
+              name={"menu"}
+              size={30}
+            />
+          </View>
+          <FancyNavigation
+            darkColor="#17202A"
+            lightColor="#424949"
+            onItemPress={this.menuOpen}
+            data={this.state.data}
+            imageUri="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwu7s_Ic3YioDVl9AmoJGsKbBuCKFVp2cD3KCPzdYlBLOcGmeV"
+          />
+
+          <View style={styles.container}>
+            <FlatList
+              data={this.state.GridListItems}
+              renderItem={({ item, index }) => (
+                <TouchableOpacity
+                  key={index}
+                  style={styles.GridViewContainer}
+                  onPress={() => Actions.Image({ image: item.url })}
+                >
+                  <CachedImage
+                    resizeMethod="resize"
+                    resizeMode="cover"
+                    source={{ uri: item.url }}
+                    style={{ width: "100%", height: 300 }}
+                  />
+                </TouchableOpacity>
+              )}
+              numColumns={1}
+            />
+            <Banner
+              style={{ width: "100%", height: "100%" }}
+              unitId={unitId}
+              size={"FULL_BANNER"}
+              request={request.build()}
+              onAdLoaded={() => {
+                console.log("Advert loaded");
+              }}
+              onAdFailedToLoad={result => {
+                console.log("result", result);
+                console.log("Ad failed to load");
+              }}
+            />
+          </View>
+        </View>
+      </SideMenu>
     );
   }
 }
