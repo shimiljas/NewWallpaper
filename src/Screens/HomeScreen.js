@@ -7,7 +7,8 @@ import {
   FlatList,
   Image,
   TouchableOpacity,
-  Dimensions
+  Dimensions,
+  Share
 } from "react-native";
 import { CachedImage, ImageCacheProvider } from "react-native-cached-image";
 import { Actions } from "react-native-router-flux";
@@ -47,7 +48,7 @@ class HomeScreen extends Component {
         { id: "1", title: "Rate Us", color: "#f44336", span: 1 },
         {
           id: "2",
-          title: "Share it to your friends",
+          title: "Share the App",
           color: "#E91E63",
           span: 2
         },
@@ -62,6 +63,32 @@ class HomeScreen extends Component {
   GetGridViewItem(item) {
     Alert.alert(item);
   }
+  menuOpen = item => {
+    if (item.id == 2) {
+      this.onShare();
+    }
+  };
+
+  onShare = async () => {
+    try {
+      const result = await Share.share({
+        message:
+          "https://play.google.com/store/apps/details?id=com.ubercab.eats&referrer=mat_click_id%3D7ba955e09e7842af865b84ec9ba081b5-20190514-7336%26link_click_id%3D656868187203377771&mat_click_id=7ba955e09e7842af865b84ec9ba081b5-20190514-7336"
+      });
+
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   render() {
     firebase.admob().initialize("ca-app-pub-5050580636963483~4190266227");
@@ -74,7 +101,7 @@ class HomeScreen extends Component {
         <FancyNavigation
           darkColor="#17202A"
           lightColor="#424949"
-          onItemPress={item => console.log(item)}
+          onItemPress={this.menuOpen}
           data={this.state.data}
           imageUri="null"
         />

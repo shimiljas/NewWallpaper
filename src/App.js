@@ -9,6 +9,7 @@ import {
   Platform,
   Dimensions,
   Easing,
+  StatusBar,
   TouchableHighlight
 } from "react-native";
 import { Router, Scene, Actions } from "react-native-router-flux";
@@ -32,7 +33,17 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      disabled: false
+      disabled: false,
+      data: [
+        { id: "1", title: "Rate Us", color: "#f44336", span: 1 },
+        {
+          id: "2",
+          title: "Share the App",
+          color: "#E91E63",
+          span: 2
+        },
+        { id: "3", title: "Contact Us", color: "#f44336", span: 3 }
+      ]
     };
 
     this.checkPermission();
@@ -144,6 +155,14 @@ class App extends Component {
 
     return (
       <View style={{ flex: 1 }}>
+        <StatusBar backgroundColor={"#17202A"} />
+        <FancyNavigation
+          darkColor="#17202A"
+          lightColor="#424949"
+          onItemPress={this.menuOpen}
+          data={this.state.data}
+          imageUri="null"
+        />
         <Root>
           <Router>
             <Scene
