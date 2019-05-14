@@ -64,6 +64,7 @@ class HomeScreen extends Component {
     Alert.alert(item);
   }
   menuOpen = item => {
+    closeNv();
     if (item.id == 2) {
       this.onShare();
     }
