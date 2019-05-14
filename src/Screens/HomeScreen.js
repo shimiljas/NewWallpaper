@@ -13,6 +13,11 @@ import { CachedImage, ImageCacheProvider } from "react-native-cached-image";
 import { Actions } from "react-native-router-flux";
 import firebase from "react-native-firebase";
 const { height, width } = Dimensions.get("window");
+import {
+  FancyNavigation,
+  openNv,
+  closeNv
+} from "react-native-rounded-navigation-drawer";
 class HomeScreen extends Component {
   constructor(props) {
     super(props);
@@ -37,9 +42,22 @@ class HomeScreen extends Component {
         { url: "https://homepages.cae.wisc.edu/~ece533/images/tulips.png" },
         { url: "https://homepages.cae.wisc.edu/~ece533/images/watch.png" },
         { url: "https://homepages.cae.wisc.edu/~ece533/images/zelda.png" }
+      ],
+      data: [
+        { id: "1", title: "Rate Us", color: "#f44336", span: 1 },
+        {
+          id: "2",
+          title: "Share it to your friends",
+          color: "#E91E63",
+          span: 2
+        },
+        { id: "3", title: "Contact Us", color: "#f44336", span: 3 }
       ]
     };
   }
+  // componentDidMount() {
+  //   openNv();
+  // }
 
   GetGridViewItem(item) {
     Alert.alert(item);
@@ -53,6 +71,13 @@ class HomeScreen extends Component {
     const unitId = "ca-app-pub-3940256099942544/6300978111";
     return (
       <View style={styles.container}>
+        <FancyNavigation
+          darkColor="#17202A"
+          lightColor="#424949"
+          onItemPress={item => console.log(item)}
+          data={this.state.data}
+          imageUri="null"
+        />
         <FlatList
           data={this.state.GridListItems}
           renderItem={({ item, index }) => (

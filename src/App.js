@@ -21,7 +21,11 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import Drawer from "react-native-drawer-menu";
 import { Root } from "native-base";
 import NotificationCard from "./components/NotificationCard";
-
+import {
+  FancyNavigation,
+  openNv,
+  closeNv
+} from "react-native-rounded-navigation-drawer";
 const { width, height } = Dimensions.get("window");
 
 class App extends Component {
@@ -147,9 +151,9 @@ class App extends Component {
               renderLeftButton={() => (
                 <MaterialCommunityIcons
                   onPress={() => {
-                    alert("ko");
+                    openNv();
                   }}
-                  style={{ color: "black", marginLeft: 20 }}
+                  style={{ color: "white", marginLeft: 20 }}
                   name={"menu"}
                   size={30}
                 />
@@ -159,7 +163,10 @@ class App extends Component {
                 key="Home"
                 initial="true"
                 component={HomeScreen}
-                title="New Wallpapers"
+                navigationBarStyle={{
+                  backgroundColor: "#17202A"
+                }}
+                titleStyle={{ color: "white" }}
               />
               <Scene key="Image" component={ImageScreen} hideNavBar />
             </Scene>
